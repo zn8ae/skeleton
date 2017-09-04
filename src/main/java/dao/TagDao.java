@@ -1,17 +1,12 @@
 package dao;
 
-import api.ReceiptResponse;
-import api.TagResponse;
-import generated.tables.Receipts;
-import generated.tables.records.TagsRecord;
 import generated.tables.records.ReceiptsRecord;
+import generated.tables.records.TagsRecord;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
-import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.impl.DSL;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -20,8 +15,6 @@ import static generated.Tables.TAGS;
 
 public class TagDao {
     DSLContext dsl;
-
-
 
     public TagDao(Configuration jooqConfig) {
         this.dsl = DSL.using(jooqConfig);
@@ -81,7 +74,6 @@ public class TagDao {
             //if found the tag exist
             if(tr.getTag().equals(tag)) {
                 //delete it (untag)
-
                 dsl.deleteFrom(TAGS).where(TAGS.TAG.equal(tag).and(TAGS.RID.equal(rid))).execute();
                 return "Delete";
             }

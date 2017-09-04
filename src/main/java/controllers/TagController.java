@@ -1,15 +1,11 @@
 package controllers;
 
-import api.CreateReceiptRequest;
-import api.CreateTagRequest;
 import api.ReceiptResponse;
 import api.TagResponse;
 import dao.TagDao;
 import generated.tables.records.ReceiptsRecord;
 import generated.tables.records.TagsRecord;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -29,9 +25,9 @@ public class TagController {
 
     @PUT
     @Path("/{tag}")
-    public void toggleTag(@PathParam("tag") String tagName, @Valid @NotNull CreateTagRequest tag) {
+    public void toggleTag(@PathParam("tag") String tagName, int id) {
         //tagName
-        String result = tags.update(tag.rid, tagName);
+        String result = tags.update(id, tagName);
     }
 
     @GET
@@ -43,7 +39,7 @@ public class TagController {
 
 
     @GET
-    public List<TagResponse> getAlTags() {
+    public List<TagResponse> getAllTags() {
         List<TagsRecord> tagRecords = tags.getAllTags();
         return tagRecords.stream().map(TagResponse::new).collect(toList());
     }

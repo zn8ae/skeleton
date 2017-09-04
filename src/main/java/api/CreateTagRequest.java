@@ -15,5 +15,5 @@ import java.math.BigDecimal;
  */
 public class CreateTagRequest {
     @NotNull
-    public int rid;
+    public int id;
 }
