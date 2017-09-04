@@ -28,7 +28,6 @@ public class ReceiptDao {
 
 
 
-
         checkState(receiptsRecord != null && receiptsRecord.getId() != null, "Insert failed");
 
         return receiptsRecord.getId();

@@ -20,8 +20,12 @@ public class HelloWorldController {
     @GET
     @Path("/hello")
     public String helloWorld() {
-        return "Hello World " ;
+        return "Hello World" ;
     }
 
-
+    @GET
+    @Path("/netid")
+    public String netid() {
+        return "zn43" ;
+    }
 }
