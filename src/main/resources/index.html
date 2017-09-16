@@ -38,7 +38,7 @@
             $.getJSON(api+"/receipts", function(receipts){
                 for(var i=0; i < receipts.length; i++) {
                     var receipt = receipts[i];
-                    $(`<div class="receipt">${receipt.merchantName}<div><span class="receiptTag">t1</span></div></div>`)
+                    $('<div class="receipt">${receipt.merchantName}<div><span class="receiptTag">t1</span></div></div>')
                         .appendTo($("#receiptList"));
                 }
 
