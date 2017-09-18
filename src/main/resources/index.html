@@ -25,7 +25,6 @@
             margin-top: 15px;
         }
 
-
         #receiptList tr, th{
             border: 1px solid black;
             font-weight: 100;
@@ -33,11 +32,22 @@
             padding: 10px 25px;
         }
 
-        .receipt {
+        .receipt, .receipt-header {
+            border: 1px solid black;
+            font-weight: 100;
             background-color: lightsteelblue;
-            border-bottom: 1px solid black;
-            width: 100%;
+            padding: 10px 25px;
         }
+
+        .receipt span, .receipt-header span {
+            border-right: 1px solid black;
+            width: 91px;
+            display: inline-block;
+            text-align: center;
+            padding: 6px;
+            margin: -1px;
+        }
+
 
         #receipt-form {
             position: relative;
@@ -55,7 +65,6 @@
             background: inherit;
             border: 1px solid black;
             color: white;
-            font-style: italic;
             font-size: 20px;
             margin-top:5px;
             margin-bottom: 10px;
@@ -63,8 +72,11 @@
             height: 30px;
         }
 
-        #add-receipt{
+        #receipt-form input::placeholder {
+             color:white
+        }
 
+        #add-receipt{
             background-color: orange;
             border: 1px solid black;
             margin-left: 110px;
@@ -75,6 +87,7 @@
 
         #cancel-receipt {
             background-color: red;
+            font-weight: 200;
             font-size: 20px;
             margin-left: 160px;
             margin-bottom: 10px;
@@ -84,6 +97,7 @@
         #save-receipt {
             background-color: green;
             font-size: 20px;
+            font-weight: 200;
             margin-bottom: 10px;
             margin-left:10px;
             padding: 8px 2px;
@@ -120,14 +134,52 @@
                 $("#receipt-form").toggle();
             })
 
-            $.getJSON(api+"/receipts", function(receipts){
-                for(var i=0; i < receipts.length; i++) {
-                    var receipt = receipts[i];
-                    $(`<div class="receipt">${receipt.merchantName}<div><span class="receiptTag">t1</span></div></div>`)
-                        .appendTo($("#receiptList"));
-                }
+            $('#cancel-receipt').on('click', function () {
+                console.info("cancel-receipt ");
+                $('#merchant').val('');
+                $('#amount').val('');
+                $('#receipt-form').toggle();
+            });
 
-            })
+            $('#save-receipt').on('click', function () {
+                console.info("save-receipt ");
+                var input_json = {
+                    merchant: $('#merchant').val(),
+                    amount: $('#amount').val()
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: api+"/receipts",
+                    contentType: 'application/json', // This is the money shot
+                    data: JSON.stringify(input_json),
+                    success: function (receipt) {
+                        console.info("addRow");
+                        appendReceipt(receipt);
+                        $('#merchant').val('');
+                        $('#amount').val('');
+                        $('#receipt-form').hide();
+                    },
+                    error: function (jqXhr, textStatus, errorThrown) {
+                        console.log(errorThrown);
+                    }
+                });
+            });
+
+
+            function appendReceipt(receipt) {
+                $(`<div class="receipt">${receipt.merchantName}<div><span class="receiptTag">t1</span></div></div>`)
+                    .appendTo($("#receiptList"));
+            }
+
+            $.getJSON(api+"/receipts", function (receipts) {
+                for (var i = 0; i < receipts.length; i++) {
+                    var receipt = receipts[i];
+                    appendReceipt(receipt);
+                }
+            });
+
+            $(`<div class="receipt-header"><span>Time</span><span>Merchant</span><span>$</span><span>Tags</span></div>`)
+                .appendTo($("#receiptList"));
         })
     </script>
 </head>
@@ -144,16 +196,7 @@
             <div class="button" id="save-receipt">save</div>
     </div>
 
-    <div id="receiptList">
-        <table>
-            <tr>
-                <th>Time</th>
-                <th>Merchant</th>
-                <th>$</th>
-                <th>Tags</th>
-            </tr>
-        </table>
-    </div>
+    <div id="receiptList"></div>
 </DIV>
 </body>
 
