@@ -135,6 +135,9 @@
 
                 var merchant = $("#merchant").val().trim();
                 var amount = $("#amount").val().trim();
+                var d = new Date();
+                var date = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+
 
                 $.ajax({
                     method: "POST",
@@ -142,12 +145,12 @@
                     data: JSON.stringify({"merchant": merchant, "amount": amount}),
                     contentType: "application/json"
                 }).done(function (id) {
-                    $("#add-receipt-dialogue").hide();
+                    $("#receipt-form").hide();
                     $("#merchant").val("");
                     $("#amount").val("");
 
                     var html = "<div class='receipt' id='" + id + "'>";
-                    html += "<span class='date'>" + new Date().toDateString() + "</span>";
+                    html += "<span class='date'>" + date + "</span>";
                     html += "<span class='merchant'>" + merchant + "</span>";
                     html += "<span class='amount'>" + amount + "</span>";
                     html += "<span class='tags'><span class='add-tag'>Add +</span></span>";
@@ -156,6 +159,17 @@
                     $("#receiptList").append(html);
                 })
             });
+
+            function appendReceipt(receipt) {
+                var html = "<div class='receipt' id='" + receipt.id + "'>";
+                html += "<span class='date'>" + receipt.created + "</span>";
+                html += "<span class='merchant'>" + receipt.merchantName + "</span>";
+                html += "<span class='amount'>" + receipt.value + "</span>";
+                html += "<span class='tags'><span class='add-tag'>Add +</span></span>";
+                html += "</div>";
+
+                $("#receiptList").append(html);
+            }
 
 
 
