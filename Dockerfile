@@ -20,8 +20,4 @@ WORKDIR /skeleton
 EXPOSE 8080
 
 # When a new container is created, the server program should be run.
-<<<<<<< HEAD
 ENTRYPOINT ["/skeleton/bin/skeleton", "server", "appconfig.yml"]
-=======
-ENTRYPOINT ["/skeleton/bin/skeleton", "server", "appconfig.yml"]
->>>>>>> 9a8925afa9756cad50a21d1cbf42f8d8deb66d4f
