@@ -6,8 +6,6 @@
     <script data-require="jquery@*" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <style type="text/css">
-
-
         H1 {
             display: block;
             float: left;
@@ -18,34 +16,26 @@
             height: 300px;
         }
 
-        #receiptList table{
-            border: 1px solid black;
-            border-collapse: collapse;
-            width:390px;
-            margin-top: 15px;
-        }
-
-        #receiptList tr, th{
-            border: 1px solid black;
-            font-weight: 100;
-            background-color: lightsteelblue;
-            padding: 10px 25px;
-        }
-
         .receipt, .receipt-header {
             border: 1px solid black;
+            width:360px;
+            margin-top: 15px;
             font-weight: 100;
+            width: 50%;
             background-color: lightsteelblue;
-            padding: 10px 25px;
+            padding: 10px 10px;
         }
 
-        .receipt span, .receipt-header span {
-            border-right: 1px solid black;
-            width: 91px;
-            display: inline-block;
-            text-align: center;
-            padding: 6px;
-            margin: -1px;
+
+
+        .receipt-header span {
+            padding: 20px;
+            margin: 20px;
+        }
+
+        .receipt span {
+            padding: 10px;
+            margin: 20px;
         }
 
 
@@ -142,34 +132,33 @@
             });
 
             $('#save-receipt').on('click', function () {
-                console.info("save-receipt ");
-                var input_json = {
-                    merchant: $('#merchant').val(),
-                    amount: $('#amount').val()
-                };
+
+                var merchant = $("#merchant").val().trim();
+                var amount = $("#amount").val().trim();
+
                 $.ajax({
-                    type: 'POST',
-                    url: api+"/receipts",
-                    contentType: 'application/json', // This is the money shot
-                    data: JSON.stringify(input_json),
-                    success: function (receipt) {
-                        console.info("addRow");
-                        appendReceipt(receipt);
-                        $('#merchant').val('');
-                        $('#amount').val('');
-                        $('#receipt-form').hide();
-                    },
-                    error: function (jqXhr, textStatus, errorThrown) {
-                        console.log(errorThrown);
-                    }
-                });
+                    method: "POST",
+                    url: api + "/receipts",
+                    data: JSON.stringify({"merchant": merchant, "amount": amount}),
+                    contentType: "application/json"
+                }).done(function (id) {
+                    $("#add-receipt-dialogue").hide();
+                    $("#merchant").val("");
+                    $("#amount").val("");
+
+                    var html = "<div class='receipt' id='" + id + "'>";
+                    html += "<span class='date'>" + new Date().toDateString() + "</span>";
+                    html += "<span class='merchant'>" + merchant + "</span>";
+                    html += "<span class='amount'>" + amount + "</span>";
+                    html += "<span class='tags'><span class='add-tag'>Add +</span></span>";
+                    html += "</div>";
+
+                    $("#receiptList").append(html);
+                })
             });
 
 
-            function appendReceipt(receipt) {
-                $(`<div class="receipt">${receipt.merchantName}<div><span class="receiptTag">t1</span></div></div>`)
-                    .appendTo($("#receiptList"));
-            }
+
 
             $.getJSON(api+"/receipts", function (receipts) {
                 for (var i = 0; i < receipts.length; i++) {
