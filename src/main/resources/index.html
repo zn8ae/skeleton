@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
 <head>
 
     <script data-require="jquery@*" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -12,6 +12,11 @@
             font-weight:100;
         }
 
+        video {
+            width: 540px;
+            height: 400px;
+            border: 1px solid black;
+        }
 
         .receipt-header {
             width:360px;
@@ -41,7 +46,6 @@
             margin: 20px;
         }
 
-
         #receipt-form {
             position: relative;
             width: 400px;
@@ -50,6 +54,15 @@
             color: white;
             margin-top: -2px;
             margin-bottom: 15px;
+            display: none;
+        }
+
+        #vbox {
+            position: relative;
+            width: 540px;
+            height: 400px;
+            margin-top: -10px;
+            margin-bottom: 50px;
             display: none;
         }
 
@@ -75,6 +88,13 @@
             margin-left: 110px;
             margin-top: 15px;
             font-size: 2.5em;
+            padding: 2px 5px;
+        }
+        #start-camera {
+            background-color: orange;
+            border: 1px solid black;
+            margin-top: 15px;
+            font-size: 1em;
             padding: 2px 5px;
         }
 
@@ -136,6 +156,73 @@
     <script>
         // This is the idiomatic way to ensure that JQuery does not
         // execute until the page has loaded
+        let imageCapture;
+        let track;
+
+        function attachMediaStream(mediaStream) {
+            $('video')[0].srcObject = mediaStream;
+
+            // Saving the track allows us to capture a photo
+            track = mediaStream.getVideoTracks()[0];
+            imageCapture = new ImageCapture(track);
+        }
+
+        function stopVideo(){
+            track.stop();
+            $("#vbox").hide();
+        }
+
+        function startVideo() {
+            $("#vbox").show();
+            navigator.mediaDevices.getUserMedia({video: {facingMode: {exact: "environment"}}})
+                .then(attachMediaStream)
+                .catch(error => {
+                navigator.mediaDevices.getUserMedia({video: true})
+                .then(attachMediaStream)
+                .catch(error => {
+                console.log('you are fooked');
+        })
+        })
+        }
+
+        function takeSnapshot() {
+            // create a CANVAS element that is same size as the image
+            imageCapture.grabFrame()
+                .then(img => {
+                const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            canvas.getContext('2d').drawImage(img, 0, 0);
+            const base64EncodedImageData = canvas.toDataURL('image/png').split(',')[1];
+
+            $.ajax({
+                url: "/images",
+                type: "POST",
+                data: base64EncodedImageData,
+                contentType: "text/plain",
+                success: function(data) {
+                    $("#receipt-form").toggle();
+                    $("#merchant").val(data.merchantName);
+                    $("#amount").val(data.amount);
+                }
+
+            })
+            stopVideo();
+
+
+        });
+        }
+
+
+        $(function () {
+            $('#start-camera').on('click', startVideo);
+            $('video').on('play', () => $('#take-pic').prop('disabled', false));
+            $('#take-pic').on('click', takeSnapshot);
+            $('#take-pic-cancel').on('click', stopVideo);
+        });
+
+
         $(function(){
             const api = ""; // <- do not need a root api URL if this page is served directly by the API
 
@@ -156,7 +243,6 @@
                 var amount = $("#amount").val().trim();
                 var d = new Date();
                 var date = d.toTimeString().split(" ")[0]
-
 
                 $.ajax({
                     method: "POST",
@@ -283,11 +369,19 @@
     <h1>My receipts</h1>
     <div class="button" id="add-receipt">+</div>
 
+    <button class="button" id="start-camera"><i class="em em-camera"></i></button>
+
     <div id="receipt-form">
         <input id="merchant" type="text" placeholder="merchant">
         <input id="amount" type="number" placeholder="amount">
             <div class="button" id="cancel-receipt">cancel</div>
             <div class="button" id="save-receipt">save</div>
+    </div>
+
+    <div id="vbox">
+        <video autoplay></video>
+        <button id="take-pic-cancel" >Cancel</button>
+        <button id="take-pic" disabled="true">Snap</button>
     </div>
 
     <div id="receiptList"></div>

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "deft-velocity-182100",
+  "private_key_id": "60af4ab7c1acba2be8986413a4e2219d010d50e1",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDHV94+amVRdLXA\ncJGyCiOoVLfNHz4iN5bDIbQYY7Obj8XvQvAsJtpqpp3DepX5FWC2w05CiC+7U66H\nzxn0Ce4Xt3bRGV99AULRYGrLy6LsyrmIyxtCV2ud0ID0fwL8UshmwTPINinSfqHA\nDGwQUxqna6echth0gq520JmbxLj2lfs5aRi6UW643oLpboYNIwvBO3gkg8KxxA91\nlYzs1c0z+3vLNafjUBPLNqRHTVh09YiM1WMwrYwmqUaAozaVM4u5sJpM8Ua7TSnj\nxv0oo2I5h213SKw4ZZfjrKmwIPrTDOIPZqT0TxlHMB9UGi6QxRxtl3FOtH0o7tqe\nIb9ESAHxAgMBAAECggEAAMMOt+lbMskB6tbjT61nPnz4aOHOMH5K5rsJv7Ad3yHZ\nDVWRqnGJky/I2Zbt3NJemMQ9V9bCa/Jhb+Z0QHELRm7ultUEfutS0I8QSXAhUsth\nkyrHk2TXJfbGj2iu370HRBFH++NtHH9caeoCPbu7ldk8/kWrrSJUvWKFu8kwNc0S\nOtnu1KLVq2YKkpI6tkMfrATozmuk3flpbs7G7aa1H75yOIpxBZmr3X8pjEsPQAYq\n8OGuVs5R2wtDzooHCwfEaMAQYGYLJWg6iQJiQpvB4Qh7CD3BlAbpjhZnclY9ko6t\ngiV/RuRJLKmqerM/dUIjXSFmbw+dSVG3HcmYEs/hAQKBgQDqeJJ0BJFh3ms4ck28\nuhRHuj/zkvbbx2HvXgx7T16gXQSRMaUwPmzJah9x6vF69pSLp8ulbcJqVlTOkbtB\nmVIRvtjjoHEVfCORQ3/540r+oiXwvccqQQ1C8eWSCdLPrLX62sZg2ebYO1TV1OnD\ncujPRnCF86fp89FE2x1YhoG4IQKBgQDZpZcYoac2ARG5O4vNa8CnRDd7CKi2QHQa\nwfzR0O98F0aqOt4SbYE3z/HZfv7SrXkKITV1uhHNIXPKZqTvTdTDivdDvfSmT6RK\nNAhl5cZDGlWq/zcW4eTEVntux9axO4t3eyKkyqFqfPIizKApMbC+UMhSnOp+1hJo\nyvpS6L7P0QKBgQDLDxKeoVoa7Rnkb7F9MZXgrJ833d4mZl0dhVC/9fPYY9ZRvDH4\nPwfNwzdqW/M375aj//Rw10aY+x1FLJaEcDjQH30MXWWyGqle45tQmZTYQysie+ih\nYmcOxBlySUmmC0gq8Q7+z5eJSpDlAxhT6Q9Qewt2JpcUGNDyleSrRwnOoQKBgBcj\n/ASqa1TamD/RjPOyWTFvl1aFfSqjf7S4m2DTjiLrdp/y0lmzOuHsQhKV5hIQT6Y8\nEasKtYnR3LXQZAjthYmk5NVXBQQJw7YAAkSTQZkw25rqt7i/G8ukRktpA/KkGhgC\nB5Tt1mu0DSqWBxFaLyiM/j+KX4RMznhF3IekJ2WBAoGAcehLvd6C7figx1VbGpjN\nI8glQIDivOc3jG2pdsNHU2moI0UYXI+M/Hx0mwbM2C4JiJ+/lUlgk2lw4QRoIg+J\nnEtRYA1DlhDrkCbCciQyHfSZEVX445hRQOiyqmTIru0iVXvMfy96Ck1IB2i+39iY\nM4LkA70rJXeuW61c0Nd7wWE=\n-----END PRIVATE KEY-----\n",
+  "client_email": "gv-service-account@deft-velocity-182100.iam.gserviceaccount.com",
+  "client_id": "110467604841970377816",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/gv-service-account%40deft-velocity-182100.iam.gserviceaccount.com"
+}
